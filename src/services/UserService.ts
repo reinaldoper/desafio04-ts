@@ -32,5 +32,20 @@ export class UserService {
     getAllUsers = () => {
         return this.db
     }
+
+    getUserByName = (name: string) => {
+        
+        const result = this.db.some(user => user.name === name)
+        return result
+    }
+
+    deleteUser = (name: string) => {
+        const result = this.getUserByName(name)
+        if (result){
+            this.db.filter(user => user.name !== name)
+            return true
+        }else return false
+       
+    }
 }
 

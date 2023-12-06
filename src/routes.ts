@@ -12,4 +12,4 @@ router.post('/user', userController.createUser)
 router.get('/user', authenticateToken, userController.getUser)
 router.patch('/user', authenticateToken, userController.getAllUser)
 router.post('/login', loginControler.getTokenLogin)
-/* router.delete('/user', userController.deleteUser) */
+router.delete('/user', authenticateToken, userController.deleteUser)

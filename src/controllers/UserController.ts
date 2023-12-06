@@ -19,17 +19,25 @@ export class UserController {
         if(!user.email){
             return response.status(400).json({ message: 'Bad request! Email obrigatório'})
         }
-
-        this.userService.createUser(user.name, user.email)
+        if(!user.password){
+            return response.status(400).json({ message: 'Bad request! password obrigatório'})
+        }
+        this.userService.createUser(user.name, user.email, user.password)
         return response.status(201).json({ message: 'Usuário criado'})
     }
 
-    getAllUsers = (request: Request, response: Response) => {
-        const users = this.userService.getAllUsers()
-        return response.status(200).json( users )
+    getUser = async (request: Request, response: Response) => {
+        const { id } = request.params
+        const users = await this.userService.getUser(id)
+        return response.status(200).json(users)
     } 
 
-    deleteUser = (request: Request, response: Response) => {
+    getAllUser = async (request: Request, response: Response) => {
+        const users = await this.userService.getUsers()
+        return response.status(200).json({ message: users})
+    }
+
+    /* deleteUser = (request: Request, response: Response) => {
         const user = request.body
     
         const result = this.userService.deleteUser(user.name)
@@ -39,5 +47,5 @@ export class UserController {
             return response.status(404).json({ message: 'Usuário não encontrado.'})
         }
         
-    }
+    } */
 }

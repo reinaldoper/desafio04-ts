@@ -14,7 +14,8 @@ describe('UserController', () => {
         const mockRequest = {
             body: {
                 name: 'Nath',
-                email: 'nath@test.com'
+                email: 'nath@test.com',
+                password: 'password'
             }
         } as Request
         const mockResponse = makeMockResponse()
@@ -26,7 +27,8 @@ describe('UserController', () => {
         const mockRequest = {
             body: {
                 name: '',
-                email: 'nath@test.com'
+                email: 'nath@test.com',
+                password: 'password'
             }
         } as Request
         const mockResponse = makeMockResponse()
@@ -38,7 +40,8 @@ describe('UserController', () => {
         const mockRequest = {
             body: {
                 name: 'Nath',
-                email: ''
+                email: '',
+                password: 'password'
             }
         } as Request
         const mockResponse = makeMockResponse()
@@ -46,7 +49,7 @@ describe('UserController', () => {
         expect(mockResponse.state.status).toBe(400)
         expect(mockResponse.state.json).toMatchObject({ message: 'Bad request! Email obrigatório' })
     })
-    it('Deve retornar erro ao deletar usuario', () => {
+    /* it('Deve retornar erro ao deletar usuario', () => {
         const mockRequest = {
             body: {
                 name: 'Nath',
@@ -56,5 +59,5 @@ describe('UserController', () => {
         userController.deleteUser(mockRequest, mockResponse)
         expect(mockResponse.state.status).toBe(404)
         expect(mockResponse.state.json).toMatchObject({ message: 'Usuário não encontrado.' })
-    })
+    }) */
 })

@@ -1,5 +1,5 @@
 import { User } from './../entitys/User';
-import { EntityManager } from "typeorm";
+import { EntityManager, DeleteResult } from "typeorm";
 /* import { AppDataSource } from "../database";
 import { User } from "../entitys/User"; */
 
@@ -44,4 +44,18 @@ export class UserRepository {
     });
     return user
   }
+
+  deleteUser = async (id: string): Promise<string> => {
+    const deleteResult: DeleteResult = await this.manager.delete(User, {
+      where: {
+        id_user: id
+      }
+    });
+  
+    if (deleteResult.affected && deleteResult.affected > 0) {
+      return 'User deleted successfully'
+    } else {
+      return 'User not found'
+    }
+  };
 }

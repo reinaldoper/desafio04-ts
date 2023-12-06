@@ -8,7 +8,7 @@ import { Request, Response, NextFunction } from 'express'
     return res.status(401).json({ message: 'Token não fornecido' });
   }
 
-  jwt.verify(token, 'token', (err: any, user: any) => {
+  jwt.verify(token, 'token', (err: any) => {
     if (err) {
       return res.status(403).json({ message: 'Falha na autenticação do token' });
     }

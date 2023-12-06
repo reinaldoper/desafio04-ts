@@ -48,7 +48,6 @@ export class UserService {
             }
 
             const token = sign(tokenData, tokenKey, tokenOptions)
-            /* console.log(token); */
             
 
             return token
@@ -57,19 +56,8 @@ export class UserService {
         }
     }
 
-    /* getUserByName = (name: string) => {
-        
-        const result = this.db.some(user => user.name === name)
-        return result
+    deleteUser = async (id: string): Promise<string> => {
+        return await this.userRepository.deleteUser(id)
     }
-
-    deleteUser = (name: string) => {
-        const result = this.getUserByName(name)
-        if (result){
-            this.db.filter(user => user.name !== name)
-            return true
-        }else return false
-       
-    } */
 }
 

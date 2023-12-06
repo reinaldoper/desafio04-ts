@@ -28,6 +28,7 @@ export class UserController {
 
     getUser = async (request: Request, response: Response) => {
         const { id } = request.params
+        if(!id) return response.status(404).json({ message: 'Id is required' })
         const users = await this.userService.getUser(id)
         return response.status(200).json(users)
     } 
@@ -37,15 +38,14 @@ export class UserController {
         return response.status(200).json({ message: users})
     }
 
-    /* deleteUser = (request: Request, response: Response) => {
-        const user = request.body
-    
-        const result = this.userService.deleteUser(user.name)
-        if(result){
-            return response.status(200).json({ message: 'Usuário deletado.' })
-        } else {
-            return response.status(404).json({ message: 'Usuário não encontrado.'})
+    deleteUser = async (request: Request, response: Response) => {
+        const { id } = request.params
+        if(!id) return response.status(404).json({ message: 'Id is required' })
+        const result = await this.userService.deleteUser(id)
+        if (result === 'User not found') {
+            response.status(404).json({ error: 'User not found' })
         }
+        response.status(200).json({ message: 'User deleted'})
         
-    } */
+    }
 }

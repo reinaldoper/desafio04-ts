@@ -1,12 +1,12 @@
 import { User } from './../entitys/User';
-import { EntityManager, DeleteResult } from "typeorm";
+import { EntityManager } from "typeorm";
 /* import { AppDataSource } from "../database";
 import { User } from "../entitys/User"; */
 
 export class UserRepository {
   private manager: EntityManager
 
-  constructor(manager: EntityManager){
+  constructor(manager: EntityManager) {
     this.manager = manager;
   }
 
@@ -14,8 +14,8 @@ export class UserRepository {
     return this.manager.save(user);
   }
 
-  getUser = async (id: string): Promise<User | null>=> {
-    return await this.manager.findOne(User, 
+  getUser = async (id: string): Promise<User | null> => {
+    return await this.manager.findOne(User,
       {
         where: {
           id_user: id,
@@ -24,18 +24,18 @@ export class UserRepository {
   }
 
   getAllUsers = async (): Promise<User[]> => {
-    const users = await this.manager.find(User,{
+    const users = await this.manager.find(User, {
       select: ["id_user", "name", "email"],
       order: {
         name: 'ASC',
       },
     });
 
-    return users 
+    return users
   }
 
   getLogin = async (name: string, password: string): Promise<User | null> => {
-    const user = await this.manager.findOne(User,{
+    const user = await this.manager.findOne(User, {
       select: ["id_user", "name", "email"],
       where: {
         name: name,
@@ -46,16 +46,15 @@ export class UserRepository {
   }
 
   deleteUser = async (id: string): Promise<string> => {
-    const deleteResult: DeleteResult = await this.manager.delete(User, {
-      where: {
-        id_user: id
-      }
-    });
-  
-    if (deleteResult.affected && deleteResult.affected > 0) {
+
+    try {
+      const deleteResult = await this.getUser(id);
+      await this.manager.remove(deleteResult)
       return 'User deleted successfully'
-    } else {
+    } catch (error) {
       return 'User not found'
     }
+
   };
+
 }

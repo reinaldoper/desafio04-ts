@@ -40,9 +40,6 @@ export class UserController {
 
     deleteUser = async (request: Request, response: Response) => {
         const { id } = request.params
-        if (!id) {
-            return response.status(404).json({ error: 'Id is required' })
-        }
         try {
             const result = await this.userService.deleteUser(id)
 

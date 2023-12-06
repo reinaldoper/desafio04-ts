@@ -43,9 +43,9 @@ export class UserController {
         if(!id) return response.status(404).json({ message: 'Id is required' })
         const result = await this.userService.deleteUser(id)
         if (result === 'User not found') {
-            response.status(404).json({ error: 'User not found' })
+            response.status(404).json({ error: result })
         }
-        response.status(200).json({ message: 'User deleted'})
+        response.status(200).json({ message: result})
         
     }
 }
